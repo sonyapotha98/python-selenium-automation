@@ -11,7 +11,7 @@ def open_target_circle(context):
 def verify_no_of_benefit_cells(context,number):
     number = int(number)
     links = context.driver.find_elements(By.CSS_SELECTOR,'div.cell-item-content')
-    assert len(links) == number , f'expected {number} links but got only {len(links)}'
+    assert len(links) == number, f'expected {number} links but got only {len(links)}'
 
 
 

@@ -1,5 +1,6 @@
 from selenium.webdriver.common.by import By
 from behave import given, when, then
+from selenium.webdriver.support import expected_conditions as EC
 from time import sleep
 
 
@@ -10,8 +11,7 @@ def open_target(context):
 
 @when('Click Sign In')
 def sign_in(context):
-    context.driver.find_element(By.XPATH, "//*[@data-test='@web/AccountLink']").click()
-    sleep(2)
+    context.driver.wait.until(EC.element_to_be_clickable((By.XPATH, "//*[@data-test='@web/AccountLink']"))).click()
 
 
 @when('Search for {product}')
@@ -26,7 +26,7 @@ def search_product(context, product):
 
 @when('From right side navigation menu, click Sign In')
 def nav_sign_in(context):
-    context.driver.find_element(By.XPATH, "//*[@data-test='accountNav-signIn']").click()
+    context.driver.wait.until(EC.element_to_be_clickable((By.XPATH, "//*[@data-test='accountNav-signIn']"))).click()
     sleep(2)
 
 

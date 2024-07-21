@@ -41,3 +41,5 @@ Feature: Target main page search tests
     |bag      |bag             |
     |bottle   |bottle          |
     |tea      |tea             |
+
+
