@@ -39,7 +39,7 @@ Feature: Target main page search tests
     Examples:
     |product  |expected_result |
     |bag      |bag             |
-    |bottle   |bottle          |
+    |juice    |juice           |
     |tea      |tea             |
 
 
