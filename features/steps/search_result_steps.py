@@ -6,12 +6,12 @@ from selenium.webdriver.support import expected_conditions as EC
 
 @then('Verify search results shown for {expected_product}')
 def verify_search_results(context, expected_product):
-    context.app.search_result_page.verify_text()
+    context.app.search_results_page.verify_search_results(expected_product)
 
 
 @then('Verify correct search results URL opens for {expected_product}')
 def verify_url(context, expected_product):
-    context.app.search_result_page.verify_url()
+    context.app.search_results_page.verify_product_in_url(expected_product)
 
 
 @then('Verify search worked')
@@ -23,8 +23,7 @@ def verify_search_results(context):
 
 @when('Add {product} to cart')
 def add_to_cart(context,product):
-    context.driver.find_element(By.CSS_SELECTOR, '[id*="addToCartButton"]').click()
-    sleep(5)
+    context.app.search_result_page.add_to_cart()
 # @when('Click on Add to Cart button')
 # def click_add_to_cart(context):
 #     context.driver.find_element(*ADD_TO_CART_BTN).click()  # always clicks on 1st Add to cart btn
@@ -33,9 +32,9 @@ def add_to_cart(context,product):
 
 
 @when('Save the expected product name')
-def expected_product(context):
-    context.expected_item = context.driver.wait.until(EC.text_to_be_present_in_element(
-        (By.XPATH, '//a[@data-test="product-title"]')))[0].text
+def save_product_name(context):
+    context.app.cart.save_product_name()
+
 
 # @when('Store product name')
 # def store_product_name(context):
@@ -44,9 +43,8 @@ def expected_product(context):
 
 
 @when('From right side navigation menu, click add to cart')
-def click_add_to_cart(context):
-    context.driver.wait.until(EC.element_to_be_clickable((By.CSS_SELECTOR, '[data-test="shippingButton"]'))).click()
-    sleep(5)
+def nav_add_to_cart(context):
+    context.app.search_result_page.nav_add_to_cart()
 
 # @when('Confirm Add to Cart button from side navigation')
 # def side_nav_click_add_to_cart(context):
@@ -63,10 +61,7 @@ def verify_add_to_cart_text(context):
 
 @then('Verify cart has the product')
 def verify_product_in_cart(context):
-    actual_text = context.driver.find_element(By.CSS_SELECTOR, '[data-test="cartItem-title"]').text
-    print(actual_text)
-    print(context.expected_item)
-    assert context.expected_item in actual_text, f'Expected {context.expected_item} not in actual {actual_text}'
+    context.app.cart.verify_product_in_cart()
 
 
 

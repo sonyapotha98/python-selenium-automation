@@ -6,8 +6,8 @@ from time import sleep
 
 @when('Open cart page')
 def open_cart(context):
-    context.driver.get('https://www.target.com/cart')
-    sleep(5)
+    context.app.cart.open_cart()
+
 
 
 # @then("Verify 'Your cart is empty' message is shown")
@@ -19,10 +19,8 @@ def open_cart(context):
 
 @then('Verify cart is empty')
 def verify_cart(context):
-    expected_text = "Your cart is empty"
-    context.driver.wait.until(EC.element_to_be_clickable((By.CSS_SELECTOR, 'a[data-test="@web/CartLink"]'))).click()
-    actual_text = context.driver.find_element(By.XPATH, '//div[@data-test="boxEmptyMsg"]').text
-    assert expected_text in actual_text, f'Expected text {expected_text} is not in actual text {actual_text}'
+    context.app.cart.verify_cart_empty()
+
 
 
 # @then('Verify cart has correct product')

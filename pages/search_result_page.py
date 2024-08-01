@@ -4,13 +4,20 @@ from time import sleep
 
 
 class SearchResultPage(Page):
+    ADD_TO_CART_BTN = (By.CSS_SELECTOR, '[id*="addToCartButton"]')
+    NAV_ADD_TO_CART = (By.CSS_SELECTOR, "[data-test='content-wrapper'] [id*= 'addToCart']")
     SEARCH_RESULT_TEXT = (By.XPATH, "//div[@data-test='resultsHeading']")
+    def verify_search_results(self, expected_product):
+        self.verify_partial_text(expected_product, *self.SEARCH_RESULT_TEXT)
 
-    def verify_text(self):
-        actual_text = self.driver.find_element(*self.SEARCH_RESULT_TEXT).text
-        assert 'coffee' in actual_text, f'Expected "coffee" not in actual {actual_text}'
+    def verify_product_in_url(self, expected_product):
+        self.verify_partial_url(expected_product)
 
-    def verify_url(self):
-        url = self.driver.current_url
-        assert 'coffee' in url, f'Expected "coffee" not in {url}'
+    def add_to_cart(self):
+        self.wait_and_click(*self.ADD_TO_CART_BTN)
+
+
+    def nav_add_to_cart(self):
+        self.wait_and_click(*self.NAV_ADD_TO_CART)
+        sleep(6)
 
